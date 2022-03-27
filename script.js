@@ -29,6 +29,7 @@ setInterval(() => {
 }, 1000);
 
 getWeatherData()
+
 function getWeatherData () {
     navigator.geolocation.getCurrentPosition((success) => {
         
@@ -36,8 +37,8 @@ function getWeatherData () {
 
         fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
 
-        console.log(data)
         showWeatherData(data);
+
         })
 
     })
@@ -91,7 +92,6 @@ function showWeatherData (data){
             
             `
         } else{
-            console.log(day.temp);
             otherDayForcast += `
             <div class="weather-forecast-item">
                 <div class="day">${window.moment(day.dt*1000).format('ddd')}</div>
@@ -106,4 +106,45 @@ function showWeatherData (data){
 
 
     weatherForecastEl.innerHTML = otherDayForcast;
+
+    console.log(data.current)
+
+    now = Date.now();
+    console.log(now)
+
+    // Set background 
+    if (data.current.weather[0].main == "Clear" && (now > data.current.sunrise || now < data.current.sunset)){
+        document.body.style.backgroundImage = "url('assets/sunny.jpg')";
+    }
+    else if (data.current.weather[0].main == "Clear" && (now < data.current.sunrise || now > data.current.sunset)){
+        document.body.style.backgroundImage = "url('assets/clear_night.jpg')";
+    }
+
+    else if (data.current.weather[0].main == "Drizzle" || data.current.weather[0].main == "Rain"){
+        document.body.style.backgroundImage = "url('assets/rainy.jpg')";
+    }
+
+    else if (data.current.weather[0].main == "Snow" && (now > data.current.sunrise || now < data.current.sunset)){
+        document.body.style.backgroundImage = "url('assets/snow_day.jpg')";
+    }
+
+    else if (data.current.weather[0].main == "Snow" && (now < data.current.sunrise || now > data.current.sunset)){
+        document.body.style.backgroundImage = "url('assets/snow_night.jpg')";
+    }
+
+    else if (data.current.weather[0].main == "Thunderstorm"){
+        document.body.style.backgroundImage = "url('assets/thunder.jpg')";
+    }
+
+    else if (data.current.weather[0].main == "Clouds" && (now > data.current.sunrise || now < data.current.sunset)){
+        document.body.style.backgroundImage = "url('assets/cloudy_day.jpg')";
+    }
+
+    else if (data.current.weather[0].main == "Clouds" && (now < data.current.sunrise || now > data.current.sunset)){
+        document.body.style.backgroundImage = "url('assets/cloudy_night.webp')";
+    }
+
+    else {
+        document.body.style.backgroundImage = "url('assets/sunny.jpg')";
+    }
 }

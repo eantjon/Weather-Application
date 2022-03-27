@@ -7,8 +7,6 @@
 }
 
 body{
-    background:url('assets/snow_night.jpg');
-    /*background:url('https://images.unsplash.com/photo-1621274403997-37aace184f49?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1'); */
     background-repeat: no-repeat;
     background-size:cover;
     overflow:hidden;
@@ -135,6 +133,13 @@ body{
 .weather-forecast .weather-forecast-item .temp{
     font-weight: 100;
     font-size: 12px;
+}
+
+.location-button {
+    margin-top: 10px;
+    border: 2px;
+    border-radius: 50%;
+    border-color: white;
 }
 
 
